@@ -11,9 +11,13 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 
 const app = express();
+
 app.use(cors({
-    origin: "https://Meganathan16.github.io"
+    origin: "https://meganathan16.github.io",
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"]
 }));
+
 app.use(bodyParser.json());
 
 const dbConfig = {
