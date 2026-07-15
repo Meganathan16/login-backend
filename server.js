@@ -12,24 +12,27 @@ const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(cors({
-    origin: "https://username.github.io"
+    origin: "https://Meganathan16.github.io"
 }));
 app.use(bodyParser.json());
 
 const dbConfig = {
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: Number(process.env.DB_PORT),
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-	 waitForConnections: true,
-    connectionLimit: 10
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 };
+
+const pool = mysql.createPool(dbConfig);
 
 // Brevo SMTP
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
+  port: Number(process.env.SMTP_PORT),
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
@@ -48,12 +51,12 @@ app.post("/signup", async (req, res) => {
     return res.status(400).json({ message: "All fields are required." });
 
   try {
-    const connection = await mysql.createConnection(dbConfig);
+    const connection = await pool.getConnection();
     const [rows] = await connection.execute(
       "SELECT * FROM users WHERE email = ?",
       [email]
     );
-    await connection.end();
+    connection.release();
 
     if (rows.length > 0)
       return res.status(400).json({ message: "Account already exists!" });
@@ -113,7 +116,7 @@ app.post("/verify-signup-otp", async (req, res) => {
         message: "Invalid OTP."
       });
 
-    const connection = await mysql.createConnection(dbConfig);
+    const connection = await pool.getConnection();
 
     // Hash password before saving
 const hashedPassword = await bcrypt.hash(pending.password, 10);
@@ -123,7 +126,7 @@ await connection.execute(
   [pending.name, email, hashedPassword, 1]
 );
 
-    await connection.end();
+    connection.release();
 
     delete pendingSignups[email];
 
@@ -182,14 +185,14 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const connection = await mysql.createConnection(dbConfig);
+    const connection = await pool.getConnection();
 
     const [rows] = await connection.execute(
       "SELECT * FROM users WHERE email = ?",
       [email]
     );
 
-    await connection.end();
+    connection.release();
 
     if (rows.length === 0)
       return res.status(400).json({
@@ -307,6 +310,23 @@ app.post("/resend-login-otp", async (req, res) => {
 // ===== Start Server =====
 const PORT = process.env.PORT || 5000;
 
+app.get("/", (req, res) => {
+    res.json({
+        status: "success",
+        message: "Backend is running successfully!"
+    });
+});
+
+(async () => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        await connection.ping();
+        console.log("✅ Database connected successfully");
+        await connection.end();
+    } catch (err) {
+        console.error("❌ Database connection failed:", err.message);
+    }
+})();
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
