@@ -11,7 +11,9 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "https://username.github.io"
+}));
 app.use(bodyParser.json());
 
 const dbConfig = {
@@ -19,7 +21,9 @@ const dbConfig = {
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+	 waitForConnections: true,
+    connectionLimit: 10
 };
 
 // Brevo SMTP
