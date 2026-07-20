@@ -26,6 +26,14 @@ const dbConfig = {
   database: process.env.DB_NAME
 };
 
+
+console.log("SMTP HOST:", process.env.SMTP_HOST);
+console.log("SMTP PORT:", process.env.SMTP_PORT);
+console.log("SMTP USER EXISTS:", !!process.env.SMTP_USER);
+console.log("SMTP PASS EXISTS:", !!process.env.SMTP_PASS);
+
+
+
 // Brevo SMTP
 const transporter = nodemailer.createTransport({
     host: "smtp-relay.brevo.com",
