@@ -28,9 +28,8 @@ const dbConfig = {
 
 // Brevo SMTP
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-
+    host: "smtp-relay.brevo.com",
+    port: 587,
     secure: false,
 
     auth: {
@@ -38,9 +37,9 @@ const transporter = nodemailer.createTransport({
         pass: process.env.SMTP_PASS
     },
 
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000
 });
 
 // Temporary storage for OTP verification
@@ -313,6 +312,36 @@ app.post("/resend-login-otp", async (req, res) => {
 
 // ===== Start Server =====
 const PORT = process.env.PORT || 5000;
+
+
+app.get("/test-smtp", async (req, res) => {
+
+    try {
+
+        console.log("Testing SMTP connection...");
+
+        await transporter.verify();
+
+        console.log("SMTP connection successful");
+
+        res.json({
+            status: "success",
+            message: "SMTP connection is working"
+        });
+
+    } catch (error) {
+
+        console.error("SMTP VERIFY ERROR:", error);
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        });
+
+    }
+
+});
+
 
 app.get("/test-email", async (req, res) => {
 
