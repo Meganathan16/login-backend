@@ -401,7 +401,7 @@ if (!passwordMatch) {
     expiresAt: Date.now() + 1 * 60 * 1000 // 5 minutes
 };
 
-    aawait transporter.sendMail({
+    await transporter.sendMail({
 
             from: '"B.M.TRAVELS" <b.meganathan2007@gmail.com>',
 
