@@ -4,6 +4,15 @@
 
 const express = require("express");
 require("dotenv").config();
+
+
+console.log("SMTP HOST:", process.env.SMTP_HOST);
+console.log("SMTP PORT:", process.env.SMTP_PORT);
+console.log("SMTP USER EXISTS:", !!process.env.SMTP_USER);
+console.log("SMTP PASS EXISTS:", !!process.env.SMTP_PASS);
+
+
+
 const mysql = require("mysql2/promise");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -25,12 +34,6 @@ const dbConfig = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
 };
-
-
-console.log("SMTP HOST:", process.env.SMTP_HOST);
-console.log("SMTP PORT:", process.env.SMTP_PORT);
-console.log("SMTP USER EXISTS:", !!process.env.SMTP_USER);
-console.log("SMTP PASS EXISTS:", !!process.env.SMTP_PASS);
 
 
 
