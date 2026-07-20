@@ -87,13 +87,97 @@ app.post("/signup", async (req, res) => {
 };
 
     // Send OTP via Brevo
-    await transporter.sendMail({
-      from: '"My App" <b.meganathan2007@gmail.com>',
-      to: email,
-      subject: "Signup OTP Verification",
-      text: `Your OTP is ${otp}`,
-      html: `<h1>Your OTP is: <b>${otp}</b></h1>`
-    });
+   await transporter.sendMail({
+
+            from: '"B.M.TRAVELS" <b.meganathan2007@gmail.com>',
+
+            to: email,
+
+            subject: "Your B.M.TRAVELS verification code for signup",
+
+            text: `
+Your B.M.TRAVELS signup verification code is: ${otp}
+
+This code will expire in 5 minutes.
+
+If you did not request this code, you can safely ignore this email.
+
+B.M.TRAVELS Team
+            `,
+
+            html: `
+<!DOCTYPE html>
+<html>
+
+<body style="
+    margin: 0;
+    padding: 0;
+    background: #f4f6f8;
+    font-family: Arial, sans-serif;
+">
+
+    <div style="
+        max-width: 600px;
+        margin: 30px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    ">
+
+        <h2 style="color: #222;">
+            B.M.TRAVELS
+        </h2>
+
+        <p style="font-size: 16px; color: #555;">
+            You requested a signup verification code.
+        </p>
+
+        <p style="font-size: 16px; color: #555;">
+            Your verification code is:
+        </p>
+
+        <div style="
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: #f1f3f5;
+            border-radius: 8px;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #111;
+        ">
+            ${otp}
+        </div>
+
+        <p style="font-size: 14px; color: #777;">
+            This code will expire in <b>5 minutes</b>.
+        </p>
+
+        <p style="font-size: 14px; color: #777;">
+            If you did not request this code, you can safely ignore this email.
+        </p>
+
+        <hr style="
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 25px 0;
+        ">
+
+        <p style="font-size: 13px; color: #999;">
+            Thank you,<br>
+            <b>B.M.TRAVELS Team</b>
+        </p>
+
+    </div>
+
+</body>
+
+</html>
+            `
+});
 
     res.json({
       message: "OTP sent! Please verify to complete signup."
@@ -175,11 +259,97 @@ app.post("/resend-signup-otp", async (req, res) => {
 
     try {
 
-        await transporter.sendMail({
-            from: '"My App" <b.meganathan2007@gmail.com>',
+         await transporter.sendMail({
+
+            from: '"B.M.TRAVELS" <b.meganathan2007@gmail.com>',
+
             to: email,
-            subject: "Signup OTP Verification",
-            html: `<h1>Your new Signup OTP is: <b>${otp}</b></h1>`
+
+            subject: "Your new B.M.TRAVELS verification code for signup",
+
+            text: `
+Your new B.M.TRAVELS signup verification code is: ${otp}
+
+This code will expire in 5 minutes.
+
+If you did not request this code, you can safely ignore this email.
+
+B.M.TRAVELS Team
+            `,
+
+            html: `
+<!DOCTYPE html>
+<html>
+
+<body style="
+    margin: 0;
+    padding: 0;
+    background: #f4f6f8;
+    font-family: Arial, sans-serif;
+">
+
+    <div style="
+        max-width: 600px;
+        margin: 30px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    ">
+
+        <h2 style="color: #222;">
+            B.M.TRAVELS
+        </h2>
+
+        <p style="font-size: 16px; color: #555;">
+            You requested a new signup verification code.
+        </p>
+
+        <p style="font-size: 16px; color: #555;">
+            Your new verification code is:
+        </p>
+
+        <div style="
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: #f1f3f5;
+            border-radius: 8px;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #111;
+        ">
+            ${otp}
+        </div>
+
+        <p style="font-size: 14px; color: #777;">
+            This code will expire in <b>5 minutes</b>.
+        </p>
+
+        <p style="font-size: 14px; color: #777;">
+            If you did not request this code, you can safely ignore this email.
+        </p>
+
+        <hr style="
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 25px 0;
+        ">
+
+        <p style="font-size: 13px; color: #999;">
+            Thank you,<br>
+            <b>B.M.TRAVELS Team</b>
+        </p>
+
+    </div>
+
+</body>
+
+</html>
+            `
+    
         });
 
         res.json({
@@ -231,12 +401,96 @@ if (!passwordMatch) {
     expiresAt: Date.now() + 1 * 60 * 1000 // 5 minutes
 };
 
-    await transporter.sendMail({
-      from: '"My App" <b.meganathan2007@gmail.com>',
-      to: email,
-      subject: "Login OTP Verification",
-      text: `Your login OTP is ${otp}`,
-      html: `<h1>Your login OTP is: <b>${otp}</b></h1>`
+    aawait transporter.sendMail({
+
+            from: '"B.M.TRAVELS" <b.meganathan2007@gmail.com>',
+
+            to: email,
+
+            subject: "Your B.M.TRAVELS verification code for login",
+
+            text: `
+Your B.M.TRAVELS login verification code is: ${otp}
+
+This code will expire in 5 minutes.
+
+If you did not request this code, you can safely ignore this email.
+
+B.M.TRAVELS Team
+            `,
+
+            html: `
+<!DOCTYPE html>
+<html>
+
+<body style="
+    margin: 0;
+    padding: 0;
+    background: #f4f6f8;
+    font-family: Arial, sans-serif;
+">
+
+    <div style="
+        max-width: 600px;
+        margin: 30px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    ">
+
+        <h2 style="color: #222;">
+            B.M.TRAVELS
+        </h2>
+
+        <p style="font-size: 16px; color: #555;">
+            You requested a login verification code.
+        </p>
+
+        <p style="font-size: 16px; color: #555;">
+            Your verification code is:
+        </p>
+
+        <div style="
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: #f1f3f5;
+            border-radius: 8px;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #111;
+        ">
+            ${otp}
+        </div>
+
+        <p style="font-size: 14px; color: #777;">
+            This code will expire in <b>5 minutes</b>.
+        </p>
+
+        <p style="font-size: 14px; color: #777;">
+            If you did not request this code, you can safely ignore this email.
+        </p>
+
+        <hr style="
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 25px 0;
+        ">
+
+        <p style="font-size: 13px; color: #999;">
+            Thank you,<br>
+            <b>B.M.TRAVELS Team</b>
+        </p>
+
+    </div>
+
+</body>
+
+</html>
+            `
     });
 
     res.json({
@@ -303,10 +557,95 @@ app.post("/resend-login-otp", async (req, res) => {
     try {
 
         await transporter.sendMail({
-            from: '"My App" <b.meganathan2007@gmail.com>',
+
+            from: '"B.M.TRAVELS" <b.meganathan2007@gmail.com>',
+
             to: email,
-            subject: "Login OTP Verification",
-            html: `<h1>Your new Login OTP is: <b>${otp}</b></h1>`
+
+            subject: "Your new B.M.TRAVELS verification code for login",
+
+            text: `
+Your new B.M.TRAVELS login verification code is: ${otp}
+
+This code will expire in 5 minutes.
+
+If you did not request this code, you can safely ignore this email.
+
+B.M.TRAVELS Team
+            `,
+
+            html: `
+<!DOCTYPE html>
+<html>
+
+<body style="
+    margin: 0;
+    padding: 0;
+    background: #f4f6f8;
+    font-family: Arial, sans-serif;
+">
+
+    <div style="
+        max-width: 600px;
+        margin: 30px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    ">
+
+        <h2 style="color: #222;">
+            B.M.TRAVELS
+        </h2>
+
+        <p style="font-size: 16px; color: #555;">
+            You requested a new login verification code.
+        </p>
+
+        <p style="font-size: 16px; color: #555;">
+            Your new verification code is:
+        </p>
+
+        <div style="
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: #f1f3f5;
+            border-radius: 8px;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: #111;
+        ">
+            ${otp}
+        </div>
+
+        <p style="font-size: 14px; color: #777;">
+            This code will expire in <b>5 minutes</b>.
+        </p>
+
+        <p style="font-size: 14px; color: #777;">
+            If you did not request this code, you can safely ignore this email.
+        </p>
+
+        <hr style="
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 25px 0;
+        ">
+
+        <p style="font-size: 13px; color: #999;">
+            Thank you,<br>
+            <b>B.M.TRAVELS Team</b>
+        </p>
+
+    </div>
+
+</body>
+
+</html>
+            `
         });
 
         res.json({
